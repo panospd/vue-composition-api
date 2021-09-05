@@ -2,6 +2,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { today, thisWeek, thisMonth, Post } from "./mocks"
 import axios  from "axios"
+import {router} from "./router"
+import "highlight.js/styles/atom-one-dark.css"
 
 function delay() {
     return new Promise(res => {
@@ -19,4 +21,6 @@ axios.get = async (url: string) => {
     }
 }
 
-createApp(App).mount('#app')
+const app = createApp(App)
+app.use(router)
+app.mount('#app')
