@@ -1,16 +1,16 @@
 <template>
-<div class="modal" :style="style">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-    <div id="modal">
-
+  <div class="modal" :style="style">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div id="modal"></div>
     </div>
+    <button @click="hide" class="modal-close is-large"></button>
   </div>
-  <button @click="hide" class="modal-close is-large"></button>
-</div>
 
   <section class="section">
     <div class="container">
+      <FormInput v-model="username" name="Username" type="text" error="This is an error" />
+      {{ username }}
       <Navbar />
       <router-view />
     </div>
@@ -18,29 +18,32 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
-import Navbar from "./components/Navbar.vue"
-import { useModal } from './useModal';
-
+import { computed, defineComponent, ref } from "vue";
+import FormInput from "./components/FormInput.vue";
+import Navbar from "./components/Navbar.vue";
+import { useModal } from "./useModal";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
   components: {
-    Navbar
+    Navbar,
+    FormInput,
   },
   setup() {
     const modal = useModal();
+    const username = ref("username");
     const style = computed(() => {
       return {
-        display: modal.show.value ? "block" : "none"
-      }
-    })
+        display: modal.show.value ? "block" : "none",
+      };
+    });
 
     return {
       style,
-      hide: () => modal.hideModal()
-    }
-  }
+      hide: () => modal.hideModal(),
+      username,
+    };
+  },
 });
 </script>
 
