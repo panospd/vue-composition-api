@@ -5,6 +5,7 @@ import axios from "axios"
 import { router } from "./router"
 import random from "lodash/random"
 import "highlight.js/styles/atom-one-dark.css"
+import { store, storeKey } from './store'
 
 function delay() {
   return new Promise(res => {
@@ -35,4 +36,5 @@ axios.post = async (url: string, post: Post) => {
 
 const app = createApp(App)
 app.use(router)
+app.use(store)
 app.mount('#app')

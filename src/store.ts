@@ -1,4 +1,4 @@
-import { reactive, readonly } from "vue"
+import { reactive, readonly, App, inject } from "vue"
 import axios from "axios"
 import { Post, today, thisMonth, thisWeek } from "./mocks"
 
@@ -12,16 +12,22 @@ interface State {
     posts: PostsState
 }
 
+export const storeKey = Symbol("store")
+
 interface PostsState {
     ids: string[]
     all: Map<string, Post>,
     loaded: boolean
 }
 
-class Store {
+export class Store {
     private state: State
     constructor(initialState: State) {
         this.state = reactive(initialState)
+    }
+
+    install(app: App) {
+        app.provide(storeKey, this)
     }
 
     getState() {
@@ -58,7 +64,7 @@ class Store {
 
 const all = new Map<string, Post>()
 
-const store = new Store({
+export const store = new Store({
     posts: {
         all,
         ids: [],
@@ -66,7 +72,13 @@ const store = new Store({
     }
 })
 
-export const useStore = () => {
-    return store
+export const useStore = (): Store => {
+    const _store = inject<Store>(storeKey)
+
+    if (!_store) {
+        throw Error("Did you forgot to call provide?")
+    }
+
+    return _store;
 }
 
