@@ -9,8 +9,6 @@
 
   <section class="section">
     <div class="container">
-      <FormInput v-model="username" name="Username" type="text" error="This is an error" />
-      {{ username }}
       <Navbar />
       <router-view />
     </div>
@@ -31,7 +29,6 @@ export default defineComponent({
   },
   setup() {
     const modal = useModal();
-    const username = ref("username");
     const style = computed(() => {
       return {
         display: modal.show.value ? "block" : "none",
@@ -40,8 +37,7 @@ export default defineComponent({
 
     return {
       style,
-      hide: () => modal.hideModal(),
-      username,
+      hide: () => modal.hideModal()
     };
   },
 });
