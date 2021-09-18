@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { today, thisWeek, thisMonth, Post } from "./mocks"
 import axios from "axios"
-import { router } from "./router"
+import { routerWithStore } from "./router"
 import random from "lodash/random"
 import "highlight.js/styles/atom-one-dark.css"
 import { Author, store, User } from './store'
@@ -49,6 +49,6 @@ axios.post = async (url: string, payload: any) => {
 }
 
 const app = createApp(App)
-app.use(router)
+app.use(routerWithStore(store))
 app.use(store)
 app.mount('#app')
