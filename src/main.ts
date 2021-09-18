@@ -5,11 +5,11 @@ import axios from "axios"
 import { router } from "./router"
 import random from "lodash/random"
 import "highlight.js/styles/atom-one-dark.css"
-import { store, storeKey } from './store'
+import { Author, store, User } from './store'
 
 function delay() {
   return new Promise(res => {
-    setTimeout(res, 2000)
+    setTimeout(res, 500)
   })
 }
 
@@ -24,12 +24,26 @@ axios.get = async (url: string) => {
 }
 
 // @ts-ignore
-axios.post = async (url: string, post: Post) => {
+axios.post = async (url: string, payload: any) => {
   if (url === "/posts") {
     const id = random(100, 10000)
     await delay();
     return Promise.resolve({
-      data: { ...post, id }
+      data: { ...payload, id }
+    })
+  }
+
+  if (url === "/users") {
+    const id = random(100, 10000)
+    await delay();
+
+    const author: Author = {
+      id: id.toString(),
+      username: payload.username
+    }
+
+    return Promise.resolve({
+      data: author
     })
   }
 }

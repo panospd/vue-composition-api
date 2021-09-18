@@ -2,23 +2,31 @@ import { reactive, readonly, App, inject } from "vue"
 import axios from "axios"
 import { Post, today, thisMonth, thisWeek } from "./mocks"
 
+interface BaseState<T> {
+    ids: string[]
+    all: Map<string, T>,
+    loaded: boolean
+}
+
 export interface User {
     id: string;
     username: string;
     password: string;
 }
 
+export type Author = Omit<User, "password">
+
+type PostsState = BaseState<Post>
+interface AuthorsState extends BaseState<Author> {
+    currentUserId: string | undefined
+}
+
 interface State {
-    posts: PostsState
+    posts: PostsState,
+    authors: AuthorsState
 }
 
 export const storeKey = Symbol("store")
-
-interface PostsState {
-    ids: string[]
-    all: Map<string, Post>,
-    loaded: boolean
-}
 
 export class Store {
     private state: State
@@ -41,7 +49,11 @@ export class Store {
     }
 
     async createUser(user: User) {
-        console.log(user)
+        const response = await axios.post<Author>("/users", user)
+        this.state.authors.all.set(response.data.id, response.data)
+        this.state.authors.ids.push(response.data.id)
+        this.state.authors.currentUserId = response.data.id
+        console.log(this.state.authors)
     }
 
     async fetchPosts() {
@@ -61,13 +73,17 @@ export class Store {
     }
 }
 
-const all = new Map<string, Post>()
-
 export const store = new Store({
     posts: {
-        all,
+        all: new Map<string, Post>(),
         ids: [],
         loaded: false
+    },
+    authors: {
+        all: new Map<string, Author>(),
+        ids: [],
+        loaded: false,
+        currentUserId: undefined
     }
 })
 
