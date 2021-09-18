@@ -42,7 +42,7 @@ export default defineComponent({
       ]);
     });
 
-    const password = ref("");
+    const password = ref("password");
     const passwordStatus = computed<Status>(() => {
       return validate(password.value, [
         required(),

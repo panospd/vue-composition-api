@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import { useModal } from "../useModal";
 import SignupVue from "./Signup.vue";
 
