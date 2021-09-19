@@ -7,7 +7,7 @@ import {Store} from "./store"
 
 export function routerWithStore(store: Store) {
     const router =  createRouter({
-        history: createWebHistory(),
+        history: createWebHistory(process.env.NODE_ENV === "production" ? "/vue-composition-api" : undefined),
         routes: [
             {
                 path: "/",
