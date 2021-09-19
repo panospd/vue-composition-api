@@ -1,5 +1,5 @@
 import { Store } from "../../src/store"
-import { mount, flushPromises } from "@vue/test-utils"
+import { mount, flushPromises, RouterLinkStub } from "@vue/test-utils"
 import Timeline from "../../src/components/Timeline.vue"
 import { today, thisWeek, thisMonth } from "../../src/mocks"
 
@@ -17,6 +17,12 @@ function mountTimeline() {
       ids: [],
       all: new Map(),
       loaded: false
+    },
+    authors: {
+      ids: [],
+      all: new Map(),
+      loaded: false,
+      currentUserId: undefined
     }
   })
   const testComp = {
@@ -34,6 +40,9 @@ function mountTimeline() {
   }
   return mount(testComp, {
     global: {
+      components: {
+        RouterLink: RouterLinkStub
+      },
       plugins: [store]
     }
   });

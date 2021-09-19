@@ -6,7 +6,7 @@
         <button class="button" @click="signOut">Sign Out</button>
       </div>
       <div v-else class="buttons">
-        <button class="button" @click="signUp">Sign Up</button>
+        <button data-test="sign-up" class="button" @click="signUp">Sign Up</button>
         <button class="button" @click="signIn">Sign In</button>
       </div>
     </div>
@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { useStore } from "../store";
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, markRaw } from "vue";
 import { useModal } from "../useModal";
 import Signup from "./Signup.vue";
 
@@ -36,7 +36,7 @@ export default defineComponent({
 
     const signIn = () => {}
     const signUp = () => {
-      modal.component.value = Signup;
+      modal.component.value = markRaw(Signup);
       modal.showModal()
     }
     const signOut = () => {}

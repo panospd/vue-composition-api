@@ -1,6 +1,12 @@
 <template>
-  <router-link v-if="canEdit" :to="`/posts/${post.id}/edit`" class="button is-link is-rounded"
-    >Edit</router-link>
+  <router-link 
+    v-if="canEdit" 
+    :to="`/posts/${post.id}/edit`" 
+    class="button is-link is-rounded"
+    data-test="can-edit"
+    >
+      Edit
+    </router-link>
   <h1>{{ post.title }}</h1>
 </template>
 
