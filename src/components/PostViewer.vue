@@ -20,11 +20,12 @@
 <script lang="ts">
 import { useStore } from "../store";
 import { defineComponent } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   async setup(props) {
     const store = useStore();
+    const router = useRouter();
     const id = useRoute().params.id as string;
 
     if (!store.getState().posts.loaded) {
@@ -34,6 +35,7 @@ export default defineComponent({
     const post = store.getState().posts.all.get(id!);
 
     if (!post) {
+      router.push("/")
       throw Error("Post was not found");
     }
 
