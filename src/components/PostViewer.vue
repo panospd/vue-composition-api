@@ -1,13 +1,20 @@
 <template>
-  <router-link 
-    v-if="canEdit" 
-    :to="`/posts/${post.id}/edit`" 
-    class="button is-link is-rounded"
-    data-test="can-edit"
-    >
-      Edit
-    </router-link>
-  <h1>{{ post.title }}</h1>
+  <div class="columns">
+    <div class="column" />
+    <div class="column is-two-thirds">
+      <router-link
+        v-if="canEdit"
+        :to="`/posts/${post.id}/edit`"
+        class="button is-link is-rounded"
+        data-test="can-edit"
+      >
+        Edit
+      </router-link>
+      <h1>{{ post.title }}</h1>
+      <div v-html="post.html" />
+    </div>
+    <div class="column" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -30,11 +37,11 @@ export default defineComponent({
       throw Error("Post was not found");
     }
 
-    const canEdit = post.authorId === store.getState().authors.currentUserId
+    const canEdit = post.authorId === store.getState().authors.currentUserId;
 
     return {
       post,
-      canEdit
+      canEdit,
     };
   },
 });
