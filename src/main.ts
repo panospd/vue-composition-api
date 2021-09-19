@@ -27,9 +27,14 @@ axios.get = async (url: string) => {
 axios.post = async (url: string, payload: any) => {
   if (url === "/posts") {
     const id = random(100, 10000)
+    const post: Post = {
+      id: id.toString(),
+      title: payload.title,
+      created: payload.created
+    }
     await delay();
-    return Promise.resolve({
-      data: { ...payload, id }
+    return Promise.resolve<{ data: Post }>({
+      data: post
     })
   }
 

@@ -1,7 +1,7 @@
 <template>
   <suspense>
     <template #default>
-      <Timeline />
+      <PostEditor />
     </template>
     <template #fallback>
       <Spinner />
@@ -11,14 +11,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Timeline from "./Timeline.vue";
-import Spinner from "./Spinner.vue";
+import PostEditor from "./PostEditor.vue";
+import Spinner from "./Spinner.vue"
 
 export default defineComponent({
-  name: "Home",
   components: {
-    Timeline,
-    Spinner,
+    PostEditor,
+    Spinner
   },
 });
 </script>
