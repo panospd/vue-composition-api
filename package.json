@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "deploy": "cp -R dist docs"
+    "deploy": "mv dist docs"
   },
   "dependencies": {
     "@types/lodash": "4.14",
